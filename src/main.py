@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import time
+import json
 import socket
 import argparse
 import textwrap
@@ -161,11 +162,14 @@ def main():
         rows = []
         for pinfo in get_pinfo_list(only_running=args.only_running):
             if args.is_json:
-                print(pinfo.as_dict())
+                print(json.dumps(pinfo.as_dict(), ensure_ascii=False))
                 continue
 
             if args.is_cmd:
-                print("cd %s;%s" % (pinfo.cwd, pinfo.cmdline))
+                cmdline = pinfo.cmdline
+                if pinfo.cwd:
+                    cmdline = f"cd {pinfo.cwd};{cmdline}"
+                print(cmdline)
                 continue
 
             row = [

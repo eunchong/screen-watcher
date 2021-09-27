@@ -1,4 +1,4 @@
 """Package version."""
 
-__version__ = "0.5"
+__version__ = "0.6"
 """Current version of screen-watcher."""
